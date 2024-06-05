@@ -1,6 +1,7 @@
 from pymongo import MongoClient
-from models import recicInsert, recicInactivo, recicUpdate
+from models import recicInsert, recicInactivo, recicUpdate, reciclableBd
 from bson import ObjectId
+from typing import List
 
 class Conexion():
     def __init__(self):
@@ -40,3 +41,9 @@ class Conexion():
         resp["estatus"]="Ok"
         resp["mensaje"]=f"Reciclable modificado en datos generales con id:{idReciclable}"  
         return  resp
+    def consultarReciclables(self)-> List[reciclableBd]:
+        tasks=[]
+        for task in self.bd.reciclable.find():
+            tasks.append(reciclableBd(**task, id=str(task["_id"])))
+        return tasks
+          

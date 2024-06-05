@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-import uvicorn
 from objectAccessData import Conexion
-from models import recicInsert, recicInactivo, recicUpdate
+from models import recicInsert, recicInactivo, recicUpdate, reciclableBd
+
+from typing import List
 
 app = FastAPI()
 
@@ -29,4 +30,8 @@ def cancelarReciclable (idReciclable:str,cancelar:recicInactivo):
 @app.put('/reciclables/{idReciclable}/modificar', tags=["RECICLABLE REST"])
 def modificarReciclable(idReciclable:str, modificar: recicUpdate):
     salida = app.cn.modificarReciclable(idReciclable, modificar)
+    return salida
+@app.get('/reciclables/{idReciclable}/modificar', tags=["RECICLABLE REST"], response_model=List[reciclableBd])
+def consultarReciclable():
+    salida = app.cn.consultarReciclables()
     return salida

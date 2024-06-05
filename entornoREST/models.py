@@ -11,3 +11,5 @@ class recicUpdate(BaseModel):
     nombre:str
     precio:str
     comentario:str
+class reciclableBd(recicInsert):
+    id: str
